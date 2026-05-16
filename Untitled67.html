@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Photography Portfolio</title>
+
+<style>
+
+/* ===== GLOBAL ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ===== INTRO ===== */
+
+.intro{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    animation:fadeOut 2.5s ease forwards;
+    animation-delay:1.5s;
+}
+
+.intro h1{
+    font-size:50px;
+    letter-spacing:3px;
+    opacity:0;
+    animation:fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn{
+    to{
+        opacity:1;
+        transform:scale(1.05);
+    }
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* ===== NAVBAR ===== */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:18px;
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(10px);
+    z-index:1000;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav a:hover{
+    opacity:0.7;
+}
+
+/* ===== HERO ===== */
+
+header{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* VIDEO/GIF BACKGROUND */
+
+header video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    z-index:-1;
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+    z-index:2;
+    padding:20px;
+}
+
+.hero-content h1{
+    font-size:70px;
+}
+
+.hero-content p{
+    margin-top:10px;
+    opacity:0.8;
+}
+
+/* ===== SECTIONS ===== */
+
+section{
+    padding:90px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:40px;
+}
+
+/* ===== GALLERY ===== */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+
+/* PHOTO CARD */
+
+.photo-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    cursor:pointer;
+}
+
+.photo-card img{
+    width:100%;
+    height:340px;
+    object-fit:cover;
+    transition:0.5s;
+    display:block;
+}
+
+.photo-card:hover img{
+    transform:scale(1.08);
+    filter:brightness(0.6);
+}
+
+/* HOVER CAPTION */
+
+.card-caption{
+    position:absolute;
+    bottom:-100%;
+    width:100%;
+    padding:20px;
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(8px);
+    transition:0.4s;
+}
+
+.photo-card:hover .card-caption{
+    bottom:0;
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    padding:30px;
+}
+
+.modal-content{
+    display:flex;
+    gap:30px;
+    max-width:1200px;
+    width:100%;
+    align-items:center;
+}
+
+.modal img{
+    width:60%;
+    max-height:85vh;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+.modal-text{
+    width:40%;
+}
+
+.modal-text h2{
+    margin-bottom:15px;
+    font-size:35px;
+}
+
+.modal-text p{
+    opacity:0.8;
+    line-height:1.7;
+}
+
+/* CLOSE BUTTON */
+
+.close{
+    position:absolute;
+    top:30px;
+    right:40px;
+    font-size:40px;
+    cursor:pointer;
+}
+
+/* ===== ABOUT ===== */
+
+.about{
+    max-width:700px;
+    margin:auto;
+    text-align:center;
+}
+
+.about p{
+    line-height:1.8;
+    opacity:0.8;
+}
+
+/* ===== BUTTONS ===== */
+
+.social-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 24px;
+    border-radius:40px;
+    text-decoration:none;
+    color:white;
+    border:1px solid rgba(255,255,255,0.2);
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.linkedin{
+    background:rgba(10,102,194,0.3);
+}
+
+.instagram{
+    background:rgba(225,48,108,0.3);
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+    padding:30px;
+    text-align:center;
+    background:black;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:900px){
+
+.modal-content{
+    flex-direction:column;
+}
+
+.modal img{
+    width:100%;
+}
+
+.modal-text{
+    width:100%;
+    text-align:center;
+}
+
+.hero-content h1{
+    font-size:42px;
+}
+
+.photo-card img{
+    height:260px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<div class="intro">
+    <h1>My Photography</h1>
+</div>
+
+<!-- NAV -->
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+</nav>
+
+<!-- HERO -->
+
+<header id="home">
+
+    <!-- STARS BACKGROUND -->
+
+    <video autoplay muted loop playsinline>
+        <source src="stars.gif" type="video/mp4">
+    </video>
+
+    <!-- OVERLAY -->
+
+    <div class="overlay"></div>
+
+    <!-- TEXT -->
+
+    <div class="hero-content">
+        <h1>My Photography</h1>
+        <p>Cinematic visual storytelling</p>
+    </div>
+
+</header>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="section-title">Gallery</h2>
+
+<div class="gallery">
+
+    <!-- CARD 1 -->
+
+    <div class="photo-card"
+    onclick="openModal(
+    '../../iCloudPhotos/Photos/IMG_0517.JPG',
+    'Street Photography',
+    'Urban cinematic storytelling through movement and atmosphere.'
+    )">
+
+        <img src="../../iCloudPhotos/Photos/IMG_0517.JPG">
+
+        <div class="card-caption">
+            <h3>Street Photography</h3>
+        </div>
+
+    </div>
+
+    <!-- QUOTE IMAGE -->
+
+    <div class="photo-card"
+    onclick="openModal(
+    'quote.jpg.jpg',
+    'Watch Me',
+    'They said impossible. I said watch me.'
+    )">
+
+        <img src="quote.jpg.jpg">
+
+        <div class="card-caption">
+            <h3>Watch Me</h3>
+        </div>
+
+    </div>
+
+    <!-- CARD 3 -->
+
+    <div class="photo-card"
+    onclick="openModal(
+    '../../Downloads/IMG_0068.JPG',
+    'Night Mood',
+    'Dark cinematic atmosphere captured at night.'
+    )">
+
+        <img src="../../Downloads/IMG_0068.JPG">
+
+        <div class="card-caption">
+            <h3>Night Mood</h3>
+        </div>
+
+    </div>
+
+    <!-- CARD 4 -->
+
+    <div class="photo-card"
+    onclick="openModal(
+    '../../iCloudPhotos/Photos/IMG_0044.JPG',
+    'City Lights',
+    'Late night visual storytelling and urban energy.'
+    )">
+
+        <img src="../../iCloudPhotos/Photos/IMG_0044.JPG">
+
+        <div class="card-caption">
+            <h3>City Lights</h3>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<div class="about">
+
+<h2 class="section-title">About Me</h2>
+
+<p>
+Hi! I am a photographer passionate about cinematic visuals,
+street photography and storytelling through images.
+</p>
+
+<div class="social-buttons">
+
+<a class="btn linkedin"
+href="https://www.linkedin.com/in/philippos-alamanos-37969940a/?skipRedirect=true"
+target="_blank">
+LinkedIn
+</a>
+
+<a class="btn instagram"
+href="https://www.instagram.com/dark._.philip/"
+target="_blank">
+Instagram
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+© 2026 My Photography Portfolio
+</footer>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <span class="close" onclick="closeModal()">×</span>
+
+    <div class="modal-content">
+
+        <img id="modal-img">
+
+        <div class="modal-text">
+
+            <h2 id="modal-title"></h2>
+
+            <p id="modal-description"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ===== MODAL ===== */
+
+function openModal(image,title,description){
+
+    document.getElementById('modal').style.display='flex'
+
+    document.getElementById('modal-img').src=image
+    document.getElementById('modal-title').innerText=title
+    document.getElementById('modal-description').innerText=description
+
+}
+
+function closeModal(){
+
+    document.getElementById('modal').style.display='none'
+
+}
+
+</script>
+
+</body>
+</html><b></b>
